@@ -14,6 +14,8 @@ jobs:
     timeout-minutes: 60
     env:
       TMPDIR: ${{ github.workspace }}/../tmp
+      # Nx's daemon socket lives in TMPDIR; this repo's longer name pushes it past the 107-byte socket path limit
+      NX_SOCKET_DIR: /tmp/nx
     steps:
       - uses: actions/checkout@v6
         with:

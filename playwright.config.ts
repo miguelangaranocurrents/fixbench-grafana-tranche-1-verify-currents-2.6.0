@@ -36,12 +36,13 @@ export const baseConfig: PlaywrightTestConfig<PluginOptions, {}> = {
   use: {
     ...devices['Desktop Chrome'],
     baseURL: process.env.GRAFANA_URL ?? DEFAULT_URL,
-    trace: 'retain-on-failure',
+    trace: 'on',
+    video: 'on',
     httpCredentials: {
       username: 'admin',
       password: 'admin',
     },
-    screenshot: 'only-on-failure',
+    screenshot: 'on',
     permissions: ['clipboard-read', 'clipboard-write'],
     provisioningRootDir: path.join(process.cwd(), process.env.PROV_DIR ?? 'conf/provisioning'),
   },

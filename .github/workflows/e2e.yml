@@ -125,6 +125,8 @@ jobs:
           GRAFANA_URL: http://localhost:3001
           GRAFANA_SUBPATH_URL: http://localhost:3002/grafana
           CI: true
+          CURRENTS_RECORD_KEY: ${{ secrets.CURRENTS_RECORD_KEY }}
+          CURRENTS_PROJECT_ID: ${{ secrets.CURRENTS_PROJECT_ID }}
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
@@ -145,4 +147,12 @@ jobs:
         with:
           name: test-results
           path: test-results.json
+          retention-days: 30
+
+      - name: Upload Currents report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: currents
+          path: currents-report.json
           retention-days: 30

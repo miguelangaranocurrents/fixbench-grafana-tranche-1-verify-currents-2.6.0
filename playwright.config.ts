@@ -1,7 +1,10 @@
+import { currentsReporter } from '@currents/playwright';
 import { defineConfig, devices, type PlaywrightTestConfig, type Project } from '@playwright/test';
 import path, { dirname } from 'path';
 
 import { type PluginOptions } from '@grafana/plugin-e2e';
+
+import currentsConfig from './currents.config';
 
 export const testDirRoot = 'e2e-playwright';
 const pluginDirRoot = path.join(testDirRoot, 'plugin-e2e');
@@ -29,6 +32,7 @@ export const baseConfig: PlaywrightTestConfig<PluginOptions, {}> = {
     ['html'], // pretty
     ['./e2e-playwright/utils/axe-a11y/reporter.ts'], // accessibility reporter
     ['json', { outputFile: 'test-results.json' }],
+    ...(process.env.CURRENTS_RECORD_KEY ? [currentsReporter(currentsConfig)] : []),
   ],
   expect: {
     timeout: 10_000,
